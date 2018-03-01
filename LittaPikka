@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name= LittaPikka
+Comment= To encourage pupils of Usk Primary to pick up litter
+Icon=/home/pi/Litta-Pikka/LittaPikka2.jpg
+Exec=sudo python3 /home/pi/Litta-Pikka/litter.py
+Type=Application
+Encoding=UTF-8
+Terminal=false
+Categories=None;
