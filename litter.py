@@ -1,6 +1,38 @@
 # User Interface
 from guizero import *
 from datetime import datetime
+import RPi.GPIO as GPIO
+import time
+import sys
+from hx711 import HX711
+
+def cleanAndExit():
+    print ("Cleaning...")
+    GPIO.cleanup()
+    print ("Bye!")
+    sys.exit()
+
+hx = HX711(9, 10)
+
+hx.set_reference_unit(380)
+
+hx.reset()
+hx.tare()
+
+
+def litter_collected():
+    for i in range(5):
+        try:
+            val = max(0, int(hx.get_weight(5)))
+            print (val)
+            #time.sleep(5)
+            hx.power_down()
+            hx.power_up()
+            time.sleep(2)
+            
+        except (KeyboardInterrupt, SystemExit):
+            cleanAndExit()
+
 
 #Database
 import sqlite3
@@ -17,23 +49,26 @@ oauth_token_secret = "UYn0acDoQTTQfniyuIpG1qmO6hQ8MQZgPyVIFf65xmaES"
 twitter = Twython(app_key, app_secret, oauth_token, oauth_token_secret)
 
 thetime = datetime.now().strftime('%-I:%M%P on %d-%m-%Y')
-
+val = max(0, int(hx.get_weight(5)))
 
 # Global Variables
 house = ''
 weight = ''
 #date = ''
-        
+
+
+
 # Add To Litter
 def enter_litter():
 
     global house
     global weight
 
-    weight = tb.value
+    weight = str(val)
+    #tb.value
 
     if weight == '':
-        print ("You haven't entered a weight")
+        print ("You haven't added a weight")
     elif house == '':
         print ("You haven't tapped a house icon")
     else :
@@ -47,6 +82,7 @@ def enter_litter():
         q += "')"
         db.execute(q)
         dbfile.commit()
+        cleanAndExit()
 
 
 # Button Commands
@@ -84,7 +120,8 @@ t05 = Text(box, text="Elan Kites", font="20", grid=[1,4])
 t06 = Text(box, text="Gower Dragons", font="20", grid=[4,4])
 t07 = Text(app, text="Enter weight of litter in grams", grid=[5,1,5,1])
 
-tb = TextBox(app)
+#tb = TextBox(app)
+button = PushButton(app, litter_collected, text="Press to activate scale")
 button = PushButton(app, enter_litter, text="Enter litter")
 
 app.display()
