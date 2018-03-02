@@ -14,7 +14,7 @@ def cleanAndExit():
 
 hx = HX711(9, 10)
 
-hx.set_reference_unit(380)
+#hx.set_reference_unit(380)
 
 hx.reset()
 hx.tare()
@@ -25,7 +25,6 @@ def litter_collected():
         try:
             val = max(0, int(hx.get_weight(5)))
             print (val)
-            #time.sleep(5)
             hx.power_down()
             hx.power_up()
             time.sleep(2)
@@ -53,37 +52,29 @@ val = max(0, int(hx.get_weight(5)))
 
 # Global Variables
 house = ''
-weight = ''
-#date = ''
+weight = str(val)
 
-
-
-# Add To Litter
 def enter_litter():
-
     global house
     global weight
-
-    weight = str(val)
-    #tb.value
-
+    
     if weight == '':
-        print ("You haven't added a weight")
-    elif house == '':
-        print ("You haven't tapped a house icon")
+       print ("You haven't added a weight")
+    if house == '':
+       print ("You haven't tapped a house icon")
     else :
-        print ("Well done " +house)
-        twitter.update_status(status=house +" have added more litter. That's 5 Dojos for " + house + thetime)
-        print ("Adding "+weight + "g of litter to " +house)
-        q = "INSERT INTO litter VALUES (date('now'),'"
-        q += house
-        q += "', '"
-        q += weight
-        q += "')"
-        db.execute(q)
-        dbfile.commit()
-        cleanAndExit()
-
+       print ("Well done " +house)
+       twitter.update_status(status=house +" have added more litter. That's 5 Dojos for " + house + " " + thetime)
+       print ("Adding "+weight + "g of litter to " +house)
+       q = "INSERT INTO litter (date, weight, house) VALUES (date('now'),'"
+       q += weight
+       q += "', '"
+       q += house
+       q += "')"
+       db.execute(q)
+       dbfile.commit()
+       cleanAndExit()
+        
 
 # Button Commands
 
