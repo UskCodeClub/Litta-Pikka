@@ -52,6 +52,8 @@ thetime = datetime.now().strftime('%-I:%M%P on %d-%m-%Y')
 val = max(0, int(hx.get_weight(5)))
 
 # Global Variables
+# Remove comment from twitter update status line when correct twitter authorisation keys in place
+
 house = ''
 weight = str(val)
 
@@ -65,7 +67,7 @@ def enter_litter():
        print ("You haven't tapped a house icon")
     else :
        print ("Well done " +house)
-       twitter.update_status(status=house +" have added more litter. That's 5 Dojos for " + house + " " + thetime)
+       #twitter.update_status(status=house +" have added more litter. That's 5 Dojos for " + house + " " + thetime)
        print ("Adding "+weight + "g of litter to " +house)
        q = "INSERT INTO litter (date, weight, house) VALUES (date('now'),'"
        q += weight
