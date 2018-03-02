@@ -40,11 +40,12 @@ db = dbfile.cursor()
 db.execute('''CREATE TABLE IF NOT EXISTS litter (date text, house text, weight real)''')
 
 # Twitter
+#App keys need to be added for Twitter to function
 from twython import Twython
-app_key = "gtqeYPlONqKyZaJ4jWaFQw9vW"
-app_secret = "8PrhMwJ87zgsOS9vQKd7yK2AZNO9o2wJHVKNfsWhSw8nEAX8Az"
-oauth_token = "963470498884710400-hD2xP20nilT2oFDU00oieLfrNU7mZ2J"
-oauth_token_secret = "UYn0acDoQTTQfniyuIpG1qmO6hQ8MQZgPyVIFf65xmaES"
+app_key = "xxxxxxxxxxKyZaJ4jWaFQw9vW"
+app_secret = "xxxxxxxxxxgsOS9vQKd7yK2AZNO9o2wJHVKNfsWhSw8nEAX8Az"
+oauth_token = "xxxxxxxxxx84710400-hD2xP20nilT2oFDU00oieLfrNU7mZ2J"
+oauth_token_secret = "xxxxxxxxxxTQfniyuIpG1qmO6hQ8MQZgPyVIFf65xmaES"
 twitter = Twython(app_key, app_secret, oauth_token, oauth_token_secret)
 
 thetime = datetime.now().strftime('%-I:%M%P on %d-%m-%Y')
@@ -111,7 +112,6 @@ t05 = Text(box, text="Elan Kites", font="20", grid=[1,4])
 t06 = Text(box, text="Gower Dragons", font="20", grid=[4,4])
 t07 = Text(app, text="Enter weight of litter in grams", grid=[5,1,5,1])
 
-#tb = TextBox(app)
 button = PushButton(app, litter_collected, text="Press to activate scale")
 button = PushButton(app, enter_litter, text="Enter litter")
 
